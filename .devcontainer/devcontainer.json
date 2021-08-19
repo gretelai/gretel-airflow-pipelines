@@ -1,0 +1,12 @@
+{
+	"name": "Airflow",
+	"dockerComposeFile": [
+		"../docker-compose.yaml"
+	],
+	"service": "airflow-worker",
+	"workspaceFolder": "/opt/airflow",
+	"settings": {},
+	"extensions": ["ms-python.python"],
+	"forwardPorts": [8080],
+	"initializeCommand": "cp -n .env.sample .env"
+}

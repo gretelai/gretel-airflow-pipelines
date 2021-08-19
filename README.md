@@ -24,6 +24,9 @@ Before getting started, the following tools must be installed on your computer
 
 You will also need a set of AWS credentials and a bucket to store intermediate files that are generated during pipeline runs.
 
+Alternatively, you may open this repo from [Github Codespace](https://github.com/gretelai/gretel-airflow-pipelines/codespaces). This will automatically start a container with an Airflow development environment.
+
+
 ### 1. Generate a Gretel API Key and setup a Gretel Project.
 
 Now that your system is setup, you will need to generate a Gretel API key, and create a new project for the walkthrough.
