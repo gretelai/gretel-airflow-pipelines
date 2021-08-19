@@ -1,8 +1,7 @@
-from gretel_client import configure_session, ClientConfig, get_project, create_project
-from gretel_client.projects import Project
-
 from airflow.exceptions import AirflowException
 from airflow.hooks.base import BaseHook
+from gretel_client import ClientConfig, configure_session, create_project, get_project
+from gretel_client.projects import Project
 
 
 class GretelHook(BaseHook):
@@ -19,7 +18,7 @@ class GretelHook(BaseHook):
         self.api_key = self.extras.get("api_key")
         self.project_id  = self.extras.get("project_id")
         if self.api_key is None:
-            raise AirflowException("No Gretel api key provided")
+            raise AirflowException("No Gretel API key provided")
         self.client_config = ClientConfig(api_key=self.api_key)
         configure_session(self.client_config)
 

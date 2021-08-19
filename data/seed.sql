@@ -43,7 +43,7 @@ create table sessions (
 );
 
 ---
---- import data
+-- import data
 ---
 
 -- users

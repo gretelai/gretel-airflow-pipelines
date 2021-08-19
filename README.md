@@ -1,4 +1,4 @@
-# Gretel on Airflow Runbooks
+# Gretel Airflow Pipeline Examples
 
 This repository contains resources and references for integrating Gretel APIs with Airflow.
 
@@ -7,7 +7,7 @@ This repository contains resources and references for integrating Gretel APIs wi
 
 ### Airbnb User Bookings - `dags/airbnb_user_bookings.py`
 
-Using an [Airbnb Booking Dataset](#) from Kaggle we build a data pipeline for extracting features from a user session database.
+Using an [Airbnb Booking Dataset](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings) from Kaggle we build a data pipeline for extracting features from a user session database.
 
 <img src="misc/bookings_dag.png" width="600" align="center"/>
 
@@ -24,7 +24,7 @@ Before getting started, the following tools must be installed on your computer
 
 You will also need a set of AWS credentials and a bucket to store intermediate files that are generated during pipeline runs.
 
-### 1. Generate a Gretel API Key and Create a Project.
+### 1. Generate a Gretel API Key and setup a Gretel Project.
 
 Now that your system is setup, you will need to generate a Gretel API key, and create a new project for the walkthrough.
 
@@ -52,14 +52,17 @@ The PostgreSQL connection details are hardcoded into the docker-compose.yml file
 After the Airflow connections have been configured, you can start the Airflow server by running
 
 ```
+make setup
 make start
 ```
 
 This will command will start a local Airflow cluster on http://localhost:8080/ backed by PostgreSQL and Redis. To stop the server, you can ctrl-c from the terminal after starting the service.
 
+The username and password for the airflow instance is  `airflow`/`airflow`.
+
 ### 4. Seed the source database
 
-The bookings pipeline uses a [Airbnb Booking Kaggle Dataset](#) and needs to be loaded into the database before continuing.
+The bookings pipeline uses a [Airbnb Booking Kaggle Dataset](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings) and needs to be loaded into the database before continuing.
 
 
 ```

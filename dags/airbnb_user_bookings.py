@@ -2,7 +2,6 @@ import logging
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 
-import requests
 from airflow.decorators import dag, task
 from airflow.operators.python import get_current_context, task
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
@@ -60,8 +59,9 @@ def gretel_synthetics_airbnb_bookings():
                 key=f"{context['dag_run'].run_id}_booking_features_synthetic.csv",
             )
 
-    feature_path = extract_features("/opt/airflow/dags/sql/features.sql")
+    feature_path = extract_features("/opt/airflow/dags/sql/session_rollups__by_user.sql")
     synthetic_data = generate_synthetic_features(feature_path)
     upload_synthetic_features(synthetic_data)
+
 
 pipeline_dag = gretel_synthetics_airbnb_bookings()

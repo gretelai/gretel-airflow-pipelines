@@ -1,15 +1,16 @@
+"""
+This pipeline demonstrate how to integrate the Gretel CLI using
+Airflow's BashOperator. For this pipeline to work, you must set
+a Variable called GRETEL_API_KEY.
+"""
+
 import os
 
-
 from airflow import DAG
+from airflow.models import Variable
 from airflow.operators.bash import BashOperator
 from airflow.utils.dates import days_ago
-from airflow.models import Variable
 
-
-args = {
-    "owner": "airflow",
-}
 
 default_env = {
     "GRETEL_API_KEY": Variable.get("GRETEL_API_KEY"),
@@ -21,11 +22,11 @@ in_data = "https://gretel-public-website.s3.us-west-2.amazonaws.com/datasets/USA
 
 
 with DAG(
-    dag_id="gretel_cli_pipeline_example",
+    dag_id="gretel_cli_redact_pii",
     schedule_interval="@once",
     start_date=days_ago(2),
     catchup=False,
-    default_args=args,
+    default_args={"owner": "airflow"},
 ) as dag:
 
     project_create = BashOperator(
