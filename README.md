@@ -13,7 +13,7 @@ Using an [Airbnb Booking Dataset](https://www.kaggle.com/c/airbnb-recruiting-new
 
 The accompanying blog post can be found here
 
-> https://docs.google.com/document/d/1fjxsqv-UBCi_zE55pcKZvDwRNDpz41Ljs10b0NJf_xM/edit#
+> https://gretel.ai/blog/running-gretel-on-apache-airflow
 
 ## Getting Started
 
