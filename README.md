@@ -8,7 +8,7 @@ This repository contains resources and references for integrating Gretel APIs wi
 
 Using an [Airbnb Booking Dataset](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings) from Kaggle we build a data pipeline for extracting features from a user session database.
 
-<img src="misc/bookings_data_flow.png" width="600" align="center"/>
+<img src="misc/bookings_data_flow.png" />
 
 The accompanying blog post can be found here
 
