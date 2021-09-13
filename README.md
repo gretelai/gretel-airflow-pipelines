@@ -2,14 +2,13 @@
 
 This repository contains resources and references for integrating Gretel APIs with Airflow.
 
-
 ## Pipelines
 
 ### Airbnb User Bookings - `dags/airbnb_user_bookings.py`
 
 Using an [Airbnb Booking Dataset](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings) from Kaggle we build a data pipeline for extracting features from a user session database.
 
-<img src="misc/bookings_dag.png" width="600" align="center"/>
+<img src="misc/bookings_data_flow.png" width="600" align="center"/>
 
 The accompanying blog post can be found here
 
@@ -19,11 +18,10 @@ The accompanying blog post can be found here
 
 Before getting started, the following tools must be installed on your computer
 
-* Docker v20.10 or greater
-* Docker Compose v1.29 or greater
+- Docker v20.10 or greater
+- Docker Compose v1.29 or greater
 
 You will also need a set of AWS credentials and a bucket to store intermediate files that are generated during pipeline runs.
-
 
 ### 1. Generate a Gretel API Key and setup a Gretel Project.
 
@@ -47,7 +45,6 @@ cp .env.sample .env
 
 The PostgreSQL connection details are hardcoded into the docker-compose.yml file and don't need to be updated.
 
-
 ### 3. Start Airflow
 
 After the Airflow connections have been configured, you can start the Airflow server by running
@@ -59,12 +56,11 @@ make start
 
 This will command will start a local Airflow cluster on http://localhost:8080/ backed by PostgreSQL and Redis. To stop the server, you can ctrl-c from the terminal after starting the service.
 
-The username and password for the airflow instance is  `airflow`/`airflow`.
+The username and password for the airflow instance is `airflow`/`airflow`.
 
 ### 4. Seed the source database
 
 The bookings pipeline uses a [Airbnb Booking Kaggle Dataset](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings) and needs to be loaded into the database before continuing.
-
 
 ```
 make seed
@@ -83,6 +79,5 @@ Alternatively you can trigger the DAG from the CLI
 ```
 ./airflow.sh dags trigger gretel_synthetics_airbnb_bookings
 ```
-
 
 If the pipeline has run successfully, you should see the original and synthetic feature CSVs in the configured s3 bucket.
