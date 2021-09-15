@@ -41,18 +41,20 @@ def gretel_synthetics_airbnb_bookings():
             # this queries the databases and streams the output
             # results to a csv file
             # docs: psycopg.org/docs/cursor.html#cursor.copy_expert
+            logger.info(f"Running {sql_file}")
             postgres.copy_expert(
                 f"copy ({sql_query}) to stdout with csv header", tmp_csv.name
             )
 
             # the csv file is then uploaded to s3
+            logger.info(f"Uploading results to {key}")
             s3.load_file(
                 filename=tmp_csv.name,
                 key=key,
             )
 
         # a key to the file is then returned
-        # eg manual__2021-09-13T06:12:00.105099+00:00_booking_features.csv
+        # eg s3://.../manual__2021-09-13T06:12:00.105099+00:00_booking_features.csv
         return key
 
     @task()
@@ -63,11 +65,14 @@ def gretel_synthetics_airbnb_bookings():
         project = gretel.get_project()
 
         # create the synthetic model using the default configuration
+        # https://github.com/gretelai/gretel-blueprints/tree/main/config_templates/gretel/synthetics
+        logger.info("Configuring model")
         model = project.create_model_obj(
             model_config="synthetics/default", data_source=s3.download_file(data_source)
         )
 
         # submit the model for training to Gretel Cloud
+        logger.info("Submitting model for training and generation")
         model.submit_cloud()
 
         # this method will block until the model is done training
@@ -77,22 +82,27 @@ def gretel_synthetics_airbnb_bookings():
 
         # returns a signed, authenticated link to the generated
         # synthetic file
+        logger.info("Model done training. Fetching synthetic data link")
         return model.get_artifact_link("data_preview")
 
     @task()
     def upload_synthetic_features(data_set: str):
         context = get_current_context()
 
+        logger.info(f"Downloading synthetic dataset {data_set}")
 
+        key = f"{context['dag_run'].run_id}_booking_features_synthetic.csv"
         with open(data_set, "rb") as synth_features:
             s3.load_file_obj(
                 file_obj=synth_features,
-                key=f"{context['dag_run'].run_id}_booking_features_synthetic.csv",
+                key=key,
             )
+        logger.info(f"Uploaded dataset to {key}")
 
-    # extract
+
+    # extract - s3://.../manual__2021-09-13T06:12:00.105099+00:00_booking_features.csv
     feature_path = extract_features("/opt/airflow/dags/sql/session_rollups__by_user.sql")
-    # synthesize
+    # synthesize - http://..../synthetic_feature.csv
     synthetic_data = generate_synthetic_features(feature_path)
     # load
     upload_synthetic_features(synthetic_data)

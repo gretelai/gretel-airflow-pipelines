@@ -56,6 +56,8 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+    AIRFLOW_CONN_GRETEL_DEFAULT: ${AIRFLOW_CONN_GRETEL_DEFAULT:-}
+    AIRFLOW_CONN_S3_DEFAULT: ${AIRFLOW_CONN_S3_DEFAULT:-}
   env_file:
     - .env
   volumes:

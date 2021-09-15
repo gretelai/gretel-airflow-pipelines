@@ -34,7 +34,7 @@ create table users (
 
 create table sessions (
     user_id varchar(10),
-    "action" varchar(255),
+    "action" varchar(255), -- post, booking, apply_reservation, etc
     action_type varchar(255),
     action_detail varchar(255),
     device_type varchar(255),
