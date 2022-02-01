@@ -7,7 +7,7 @@ from gretel_client.projects import Project
 class GretelHook(BaseHook):
     """Gretel Airflow hook for managing API connections.
 
-    A Gretel connections follow the HTTP URI convention. Eg
+    A Gretel connection is defined as a URI. Eg
 
         http://api.gretel.cloud?api_key=INSERT_API_KEY&project_id=INSERT_PROJECT_ID
 
